@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { HomeContainer } from './style';
+import { HomeStyle } from './style';
 
-const Home = () => {
+function Home(props) {
     return (
-        <HomeContainer>
+        <HomeStyle>
             首页
-        </HomeContainer>
+        </HomeStyle>
     );
 }
 

@@ -1,0 +1,18 @@
+html,
+body,
+#root {
+    height: 100%;
+}
+
+* {
+    // 滚动条样式
+    // ::-webkit-scrollbar {
+    //     width: 6px;
+    //     height: 6px;
+    // }
+}
+
+.container {
+    margin: auto;
+    max-width: 1440px;
+}

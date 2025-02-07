@@ -1,14 +1,18 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import Layout from '@/layout';
+
 const Login = lazy(() => import('@/pages/Login'));
-const Home = lazy(() => import('@/pages/Home'));
+const Welcome = lazy(() => import('@/pages/Welcome'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
+
+const Home = lazy(() => import('@/pages/Home'));
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Navigate to="/home" replace />,
+		element: <Navigate to="/welcome" replace />,
 	},
 	{
 		name: '登录',
@@ -16,9 +20,19 @@ const router = createBrowserRouter([
         element: <Login />,
 	},
 	{
-		name: '首页',
+		name: '欢迎',
+		path: '/welcome',
+		element: <Welcome />,
+	},
+	{
 		path: '/home',
-		element: <Home />,
+		element: <Layout />,
+		children: [
+			{
+				index: true,
+				element: <Home />
+			}
+		]
 	},
 	{
 		path: '*',
