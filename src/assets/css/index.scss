@@ -1,7 +1,7 @@
 html,
 body,
 #root {
-    height: 100%;
+    min-height: 100%;
 }
 
 * {
@@ -15,4 +15,22 @@ body,
 .container {
     margin: auto;
     max-width: 1440px;
+}
+
+.cyc_card {
+    background: #fff;
+    border-radius: 6px;
+}
+
+.cyc_ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.cyc_click_link {
+    &:hover {
+        color: #1171ee !important;
+    }
 }

@@ -7,6 +7,8 @@ export const HeaderStyle = styled.header`
 	background: #fff;
 	height: 60px;
 	box-shadow: 0 2px 8px #f2f3f5;
+	z-index: 1000;
+	padding: 0 11px;
 
 	.container {
 		min-height: 60px;

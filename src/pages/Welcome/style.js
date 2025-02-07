@@ -4,7 +4,7 @@ import bgImage from '@/assets/images/welcome/bg.jpg';
 
 export const WelcomeStyle = styled.div`
 	position: relative;
-	height: 100%;
+	height: 100vh;
 	background: url(${bgImage});
 	background-size: cover;
 	background-position: center;

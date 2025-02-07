@@ -10,6 +10,6 @@ export const LayoutStyle = styled.div`
         flex: 1;
         max-width: 1200px;
         width: 1200px;
-        margin: 20px auto 0;
+        margin: 18px auto;
     }
 `;
