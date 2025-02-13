@@ -8,7 +8,7 @@ export const HeaderStyle = styled.header`
 	height: 60px;
 	box-shadow: 0 2px 8px #f2f3f5;
 	z-index: 1000;
-	padding: 0 11px;
+	padding: 0 22px;
 
 	.container {
 		min-height: 60px;
@@ -33,10 +33,10 @@ export const HeaderStyle = styled.header`
 					padding: 0 12px;
 					font-size: 14px;
 					color: #515767;
-                    position: relative;
+					position: relative;
 
 					&::after {
-                        display: none;
+						display: none;
 						content: '';
 						position: absolute;
 						top: auto;
@@ -48,16 +48,16 @@ export const HeaderStyle = styled.header`
 						width: calc(100% - 24px);
 					}
 
-                    &.active {
+					&.active {
 						color: #1e80ff;
 					}
 
-                    &:hover {
+					&:hover {
 						color: #252933;
 
-                        &::after {
-                            display: block;
-                        }
+						&::after {
+							display: block;
+						}
 					}
 				}
 			}
@@ -75,6 +75,33 @@ export const HeaderStyle = styled.header`
 					width: 40px;
 					height: 40px;
 					border-radius: 50%;
+				}
+			}
+		}
+
+		.login-content {
+			background: rgba(30, 128, 255, 0.05);
+			border: 1px solid rgba(30, 128, 255, 0.3);
+			border-radius: 4px;
+			padding: 0 12px;
+			color: #007fff;
+			font-size: 14px;
+			font-weight: 400;
+			display: flex;
+			align-items: center;
+			line-height: 32px;
+
+			.bar {
+				width: 1px;
+				height: 12px;
+				background-color: #abcdff;
+				margin: 0 8px;
+			}
+
+			.login-btn,
+			.register-btn {
+				&:hover {
+					color: #84b5ff;
 				}
 			}
 		}

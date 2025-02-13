@@ -4,6 +4,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Layout from '@/layout';
 
 const Login = lazy(() => import('@/pages/Login'));
+const Register = lazy(() => import('@/pages/Register'));
+const Forget = lazy(() => import('@/pages/Forget'));
 const Welcome = lazy(() => import('@/pages/Welcome'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
@@ -18,6 +20,16 @@ const router = createBrowserRouter([
 		name: '登录',
 		path: '/login',
         element: <Login />,
+	},
+	{
+		name: '注册',
+		path: '/register',
+		element: <Register />,
+	},
+	{
+		name: '忘记密码',
+		path: '/forget',
+		element: <Forget />,
 	},
 	{
 		name: '欢迎',

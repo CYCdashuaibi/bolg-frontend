@@ -4,7 +4,7 @@ import { message } from 'antd';
 import router from '@/router';
 
 const request = axios.create({
-	baseURL: 'http://geek.itheima.net/v1_0',
+	baseURL: 'http://127.0.0.1:3000/api/',
 	timeout: 5000,
 });
 
@@ -31,9 +31,15 @@ request.interceptors.response.use(
 		// 检查 error 对象中是否有 response 属性
 		if (error.response) {
 			const code = error?.response?.status;
+			const data = error?.response?.data;
 			const msg = error?.response?.data?.message;
+			
 			switch (code) {
 				case 400:
+					if (data.validate === false && data.errors.length) {
+						message.error(data.errors[0].msg);
+						return;
+					}
 					message.error(msg || '请求错误 (400)');
 					break;
 				case 401:
