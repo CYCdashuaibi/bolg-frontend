@@ -1,44 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSetState } from "ahooks";
+
+import { getCategoryListAPI } from "@/apis/category";
+
 import { CategoryStyle } from "./style";
 
-const categorys = [
-    {
-        name: '全部',
-        icon: 'icon-xingzhuang'
-    },
-    {
-        name: '前端',
-        icon: 'icon-qianduan',
-    },
-    {
-        name: '后端',
-        icon: 'icon-houduan',
-    },
-    {
-        name: 'Android',
-        icon: 'icon-anzhuo',
-    },
-    {
-        name: 'Flutter',
-        icon: 'icon-flutter-line',
-    }
-]
+const defaultCategorys = [
+	{
+		name: "全部",
+		icon: "icon-xingzhuang",
+	},
+];
+
+const initialState = {
+	categorys: [],
+	active: "全部",
+};
 
 function Category({ onChange }) {
-    const [active, setActive] = useState('全部');
+	const [state, dispatch] = useSetState(initialState);
 
-    return (
-        <CategoryStyle>
-            <div className="nav-item-list cyc_card">
-                {categorys.map((item) => (
-                    <a className={`nav-item-wrap ${active === item.name && 'active'}`} key={item.name} onClick={() => { setActive(item.name); onChange?.(item.name) }}>
-                        <i className={`iconfont ${item.icon}`} />
-                        <span className="nav-item-text">{item.name}</span>
-                    </a>
-                ))}
-            </div>
-        </CategoryStyle>
-    );
+	const { categorys, active } = state;
+
+	useEffect(() => {
+		getCategoryListAPI().then((res) => {
+			if (res.success) {
+				dispatch({ categorys: [...defaultCategorys, ...res.data] });
+			}
+		});
+	}, []);
+
+	return (
+		<CategoryStyle>
+			<div className="nav-item-list cyc_card">
+				{categorys.map((item) => (
+					<a
+						className={`nav-item-wrap ${
+							active === item.name && "active"
+						}`}
+						key={item.name}
+						onClick={() => {
+							dispatch({ active: item.name });
+							onChange?.(item.name);
+						}}
+					>
+						<i className={`iconfont ${item.icon}`} />
+						<span className="nav-item-text">{item.name}</span>
+					</a>
+				))}
+			</div>
+		</CategoryStyle>
+	);
 }
 
 export default Category;
