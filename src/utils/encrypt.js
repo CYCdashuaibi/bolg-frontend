@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 
+// 加密密钥
 const secretKey = 'CYCSHIDASHUAIBI';
 
 export const encryptData = (data) => {

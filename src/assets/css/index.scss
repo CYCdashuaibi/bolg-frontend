@@ -10,35 +10,24 @@ body {
     width: 100%;
 }
 
-/* 修改滚动条的样式 */
-/* 对于Firefox浏览器 */
-/* 宽度 */
-* {
-    scrollbar-width: thin;
-    /* "auto"或"thin"或"none" */
-    scrollbar-color: #6b6b6b #2b2b2b;
-    /* 滚动条的颜色，可以设置两个颜色，前者是滚动条的滑块颜色，后者是滚动条的轨道颜色 */
-}
-
-/* 对于Chrome、Safari和Edge浏览器 */
-/* 宽度 */
+/* 针对 Chrome、Safari 和 Edge */
 *::-webkit-scrollbar {
     width: 8px;
-    /* 滚动条宽度 */
-    overflow: overlay;
+    height: 8px;
+    /* 仅对纵向滚动条生效，横向滚动条需要设置 height */
 }
 
-/* 滑块颜色 */
 *::-webkit-scrollbar-thumb {
-    background-color: #6b6b6b;
-    /* 滚动条滑块颜色 */
+    background-color: #cfcfcf;
     border-radius: 5px;
 }
 
-/* 悬停在滑块上时的颜色 */
 *::-webkit-scrollbar-thumb:hover {
     background-color: #8c8c8c;
-    /* 悬停时滚动条滑块颜色 */
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 
 .container {

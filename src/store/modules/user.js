@@ -38,10 +38,10 @@ const userSlice = createSlice({
 export const fetchLogin = (params) => async (dispatch) => {
 	loginAPI(params).then((res) => {
 		if (res.success) {
+			router.navigate('/cyc/home');
+			message.success('登录成功');
 			dispatch(setToken(res.data.token));
 			dispatch(setUserInfo(decryptData(res.data.userInfo)));
-			message.success('登录成功');
-			router.navigate('/home');
 		} else {
 			message.error(res.message);
 		}
