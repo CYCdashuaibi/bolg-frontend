@@ -13,6 +13,9 @@ const MarkdownEditor = forwardRef(({ initialValue, onChange }, ref) => {
 	useImperativeHandle(ref, () => ({
 		getValue: () => vd?.getValue(),
 		getHTML: () => vd?.getHTML(),
+		reset: () => {
+			vd?.setValue("");
+		},
 	}));
 
 	useEffect(() => {

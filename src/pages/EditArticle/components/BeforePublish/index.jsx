@@ -17,7 +17,7 @@ const initialState = {
 	cover: null,
 };
 
-const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
+const BeforePublish = forwardRef(({ children, onPublish, loading }, ref) => {
 	const [state, dispatch] = useSetState(initialState);
 	const { visible, categorys, tags, cover } = state;
 
@@ -31,6 +31,10 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 			dispatch({ visible: false });
 		},
 		form,
+		reset: () => {
+			form.resetFields();
+			dispatch({ cover: null });
+		},
 	}));
 
 	useEffect(() => {
@@ -66,7 +70,7 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 		handleUpload([file], "article")
 			.then((urls) => {
 				dispatch({ cover: urls[0] });
-				form.setFieldsValue({ cover: urls[0] });
+				form.setFieldsValue({ cover_image: urls[0] });
 
 				onSuccess(urls[0]);
 			})
@@ -106,7 +110,7 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 								className="popover-form"
 							>
 								<Form.Item
-									name="category"
+									name="category_id"
 									label="分类"
 									rules={[
 										{
@@ -139,7 +143,7 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 									/>
 								</Form.Item>
 								<Form.Item
-									name="cover"
+									name="cover_image"
 									label="文章封面"
 									style={{
 										marginBottom: 0,
@@ -174,7 +178,7 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 									(封面仅展示在首页信息流中)
 								</div>
 								<Form.Item
-									name="abstract"
+									name="summary"
 									label="编辑摘要"
 									rules={[
 										{
@@ -200,10 +204,11 @@ const BeforePublish = forwardRef(({ children, onPublish }, ref) => {
 								color="primary"
 								variant="outlined"
 								onClick={() => dispatch({ visible: false })}
+								loading={loading}
 							>
 								取消
 							</Button>
-							<Button type="primary" onClick={onPublish}>
+							<Button type="primary" onClick={onPublish} loading={loading}>
 								确认并发布
 							</Button>
 						</div>

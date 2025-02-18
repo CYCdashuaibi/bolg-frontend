@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { Form, Input, Button, message } from "antd";
+import { useSetState } from "ahooks";
 
+import { createArticleAPI } from "@/apis/article";
 import { handleInsertValue } from "@/utils";
 import { MarkdownEditor } from "@/components";
 import BeforePublish from "./components/BeforePublish";
@@ -10,8 +12,15 @@ import { EditArticleStyle } from "./style";
 
 import DefaultAvatar from "@/assets/images/default_avatar.png";
 
+const initialState = {
+	loading: false,
+};
+
 const EditArticle = (props) => {
 	const { userInfo } = useSelector((state) => state.user);
+
+	const [state, dispatch] = useSetState(initialState);
+	const { loading } = state;
 
 	const [form] = Form.useForm();
 	const markdownEditorRef = useRef();
@@ -24,23 +33,67 @@ const EditArticle = (props) => {
 				return;
 			}
 
+			const content = markdownEditorRef.current.getHTML();
+
+			if (!content?.trim()) {
+				message.error("请输入文章内容");
+				return;
+			}
+
 			beforePublishRef.current.form
 				.validateFields()
 				.then((beforePublishValues) => {
-					const content = markdownEditorRef.current.getHTML();
+					dispatch({ loading: true });
 
 					const params = {
 						...values,
 						...beforePublishValues,
 						content,
+						status: "published",
 					};
-					console.log(params, "params");
+
+					createArticleAPI(params)
+						.then((res) => {
+							if (res?.success) {
+								message.success("发布成功");
+								form.resetFields();
+								markdownEditorRef.current.reset();
+								beforePublishRef.current.reset();
+							}
+						})
+						.finally(() => {
+							dispatch({ loading: false });
+						});
 				});
 		});
 	};
 
 	const onSaveDraft = () => {
-		const value = markdownEditorRef.current.getHTML();
+		dispatch({ loading: true });
+		const values = form.getFieldsValue();
+		const content = markdownEditorRef.current.getHTML();
+		const beforePublishValues =
+			beforePublishRef.current.form.getFieldsValue();
+
+		const params = {
+			...values,
+			...beforePublishValues,
+			content,
+			status: "draft",
+		};
+
+		createArticleAPI(params)
+			.then((res) => {
+				if (res?.success) {
+					message.success("保存草稿成功");
+					form.resetFields();
+					markdownEditorRef.current.reset();
+					beforePublishRef.current.form.resetFields();
+				}
+			})
+			.finally(() => {
+				dispatch({ loading: false });
+			});
 	};
 
 	return (
@@ -62,7 +115,11 @@ const EditArticle = (props) => {
 					>
 						保存草稿
 					</Button>
-					<BeforePublish ref={beforePublishRef} onPublish={onPublish}>
+					<BeforePublish
+						ref={beforePublishRef}
+						onPublish={onPublish}
+						loading={loading}
+					>
 						<Button type="primary">发布</Button>
 					</BeforePublish>
 					<img
