@@ -52,6 +52,13 @@ function Header() {
 									placeholder="搜索"
 									enterButton
 									style={{ width: 300 }}
+									onSearch={(value) => {
+										if (value.trim()) {
+											navigate(`/cyc/home?search=${encodeURIComponent(value.trim())}`);
+										} else {
+											navigate("/cyc/home");
+										}
+									}}
 								/>
 							</li>
 							<li className="add">

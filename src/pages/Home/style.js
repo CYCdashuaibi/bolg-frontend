@@ -23,6 +23,8 @@ export const HomeStyle = styled.div`
 			}
 
 			.entry-list {
+				min-height: calc(100vh - 180px);
+
 				.entry {
 					padding: 12px 20px;
 					border-bottom: 1px solid rgba(228, 230, 235, 0.5);
@@ -109,6 +111,8 @@ export const HomeStyle = styled.div`
 							height: 72px;
 							margin-left: 24px;
 							border: 1px solid rgba(228, 230, 235, 0.5);
+							object-fit: cover;
+							object-position: center;
 						}
 					}
 				}
