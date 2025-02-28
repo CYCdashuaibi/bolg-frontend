@@ -28,7 +28,7 @@ function Header() {
 	return (
 		<HeaderStyle>
 			<div className="container">
-				<NavLink href="/cyc/home" className="logo">
+				<NavLink to="/cyc/home" className="logo">
 					<img src={Logo} alt="logo" className="logo" />
 				</NavLink>
 				<nav className="header-nav">
@@ -36,7 +36,7 @@ function Header() {
 						<li className="nav-list-menu">
 							{menuList.map((menu) => (
 								<NavLink
-									href={menu.path}
+									to={menu.path}
 									key={menu.path}
 									className={`nav-list-menu-item ${
 										pathname === menu.path && "active"
