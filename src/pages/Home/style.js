@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const HomeStyle = styled.div`
 	display: flex;
 	gap: 20px;
+	height: 100%;
 
 	.home {
 		&_left {
 			height: fit-content;
 			position: sticky;
-			top: 78px;
+			top: 0;
 		}
 		&_center {
 			flex: 1 1 auto;

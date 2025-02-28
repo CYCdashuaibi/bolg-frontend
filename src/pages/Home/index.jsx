@@ -1,5 +1,5 @@
 import { useEffect, useRef, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, NavLink } from "react-router-dom";
 import { Select, Empty, Spin } from "antd";
 import { useSetState } from "ahooks";
 
@@ -131,34 +131,34 @@ function Home(props) {
 									<div className="content-wrapper">
 										<div className="content-main">
 											<div className="title-row">
-												<a
-													href="#"
+												<NavLink
+													to={`/cyc/article-view/${item.id}`}
 													className="title cyc_ellipsis"
 													target="_blank"
 													title={item.title}
 												>
 													{item.title}
-												</a>
+												</NavLink>
 											</div>
 											<div className="abstract-row">
-												<a
-													href="#"
+												<NavLink
+													to={`/cyc/article-view/${item.id}`}
 													className="abstract cyc_ellipsis"
 													target="_blank"
 												>
 													{item.summary}
-												</a>
+												</NavLink>
 											</div>
 											<div className="entry-footer">
 												<ul className="action-list">
 													<li className="user-message item cyc_click_link">
-														<a
-															href="#"
+														<NavLink
+															to={`/cyc/user-view/${item.User.id}`}
 															className="username"
 															target="_blank"
 														>
 															{item.User.nickname}
-														</a>
+														</NavLink>
 														<div className="footer-divider" />
 													</li>
 													<li className="view item">
