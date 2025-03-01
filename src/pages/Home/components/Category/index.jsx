@@ -28,7 +28,6 @@ function Category({ onChange }) {
 				dispatch({ categorys: [...defaultCategorys, ...res.data] });
 			}
 		});
-		onChange?.(active);
 	}, []);
 
 	return (

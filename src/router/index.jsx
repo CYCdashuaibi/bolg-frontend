@@ -9,7 +9,8 @@ const Register = lazy(() => import("@/pages/Register"));
 const Forget = lazy(() => import("@/pages/Forget"));
 const Welcome = lazy(() => import("@/pages/Welcome"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const EditArticle = lazy(() => import("@/pages/EditArticle"));
+const EditArticle = lazy(() => import("@/pages/Article/EditArticle"));
+const ArticleView = lazy(() => import("@/pages/Article/ArticleView"));
 
 const Home = lazy(() => import("@/pages/Home"));
 
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
 				name: "首页",
 				path: "home",
 				element: <Home />,
+			},
+			{
+				name: "查阅文章",
+				path: "article-view/:id",
+				element: <ArticleView />,
 			},
 		],
 	},

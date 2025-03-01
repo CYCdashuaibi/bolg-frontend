@@ -63,7 +63,7 @@ const MarkdownEditor = forwardRef(({ initialValue, onChange }, ref) => {
 			vd?.destroy();
 			setVd(undefined);
 		};
-	}, []);
+	}, [initialValue]);
 
 	return <MarkdownEditorStyle id="cycVditor" className="vditor" />;
 });

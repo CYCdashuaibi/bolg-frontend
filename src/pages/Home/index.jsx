@@ -19,7 +19,7 @@ const DEFAULT_LIMIT = 20;
 const initialState = {
 	tags: [],
 	activeTag: "全部",
-	category: null,
+	category: "全部",
 	articleList: [],
 	page: 1,
 	limit: DEFAULT_LIMIT,
@@ -177,20 +177,25 @@ function Home(props) {
 
 												<ul className="entry-footer-tags">
 													{item.Tags.map((tag) => (
-														<li className="footer-tag" key={tag.id}>
+														<li
+															className="footer-tag"
+															key={tag.id}
+														>
 															{tag.name}
 														</li>
 													))}
 												</ul>
 											</div>
 										</div>
-										<img
-											src={handleInsertValue(
-												item.cover_image,
-											)}
-											alt=""
-											className="content-img"
-										/>
+										{item.cover_image && (
+											<img
+												src={handleInsertValue(
+													item.cover_image,
+												)}
+												alt=""
+												className="content-img"
+											/>
+										)}
 									</div>
 								</li>
 							))}

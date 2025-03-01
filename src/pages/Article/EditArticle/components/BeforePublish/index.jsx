@@ -139,6 +139,7 @@ const BeforePublish = forwardRef(({ children, onPublish, loading }, ref) => {
 										mode="multiple"
 										maxCount={3}
 										placeholder="请选择标签"
+										optionFilterProp="label"
 										options={tags}
 									/>
 								</Form.Item>

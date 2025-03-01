@@ -33,7 +33,7 @@ const EditArticle = (props) => {
 				return;
 			}
 
-			const content = markdownEditorRef.current.getHTML();
+			const content = markdownEditorRef.current.getValue();
 
 			if (!content?.trim()) {
 				message.error("请输入文章内容");

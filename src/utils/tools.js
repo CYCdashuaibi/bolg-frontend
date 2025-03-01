@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import dayjs from 'dayjs';
 
 import { uploadFileAPI } from '@/apis/upload';
 import { IMAGE_BASE_URL } from '@/utils/config';
@@ -28,3 +29,11 @@ export const handleInsertValue = (url) => `${IMAGE_BASE_URL}${url}`;
  * @returns 移除 baseUrl 的图片url
  */
 export const handleRemoveBaseUrl = (url) => url.replace(IMAGE_BASE_URL, "");
+
+/**
+ * 格式化时间
+ * @param {*} time 时间
+ * @param {*} format 格式
+ * @returns 格式化后的时间
+ */
+export const handleFormatTime = (time, format = "YYYY-MM-DD HH:mm:ss") => dayjs(new Date(time)).format(format);
