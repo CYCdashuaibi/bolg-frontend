@@ -1,10 +1,11 @@
 import { useEffect, useRef, useMemo } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Select, Empty, Spin } from "antd";
 import { useSetState } from "ahooks";
 
 import { getTagListAPI } from "@/apis/tag";
-import { getArticleListAPI } from "@/apis/article";
+import { getArticleListAPI, likeArticleAPI, unLikeArticleAPI } from "@/apis/article";
 
 import { handleInsertValue } from "@/utils";
 
@@ -39,6 +40,8 @@ function Home(props) {
 		loading,
 		total,
 	} = state;
+
+	const { token } = useSelector((state) => state.user);
 
 	const loadingRef = useRef(false);
 
@@ -83,6 +86,7 @@ function Home(props) {
 		};
 	}, [hasMore, loading]);
 
+	// 获取文章列表
 	const getArticleList = () => {
 		getArticleListAPI({
 			keyword,
@@ -93,6 +97,54 @@ function Home(props) {
 		}).then((res) => {
 			if (res.success) {
 				dispatch({ articleList: res.data.rows });
+			}
+		});
+	};
+
+	// 点赞文章
+	const likeArticle = (id) => {
+		if (!token) {
+			message.warning("请先登录");
+			return;
+		}
+		likeArticleAPI(id).then((res) => {
+			if (res.success) {
+				dispatch({
+					articleList: articleList.map((item) => {
+						if (item.id === id) {
+							return {
+								...item,
+								like_count: item.like_count + 1,
+								isLiked: true,
+							};
+						}
+						return item;
+					}),
+				});
+			}
+		});
+	};
+
+	// 取消点赞文章
+	const unLikeArticle = (id) => {
+		if (!token) {
+			message.warning("请先登录");
+			return;
+		}
+		unLikeArticleAPI(id).then((res) => {
+			if (res.success) {
+				dispatch({
+					articleList: articleList.map((item) => {
+						if (item.id === id) {
+							return {
+								...item,
+								like_count: item.like_count - 1,
+								isLiked: false,
+							};
+						}
+						return item;
+					}),
+				});
 			}
 		});
 	};
@@ -168,7 +220,26 @@ function Home(props) {
 														</span>
 													</li>
 													<li className="like item cyc_click_link">
-														<i className="iconfont icon-dianzan" />
+														{item.isLiked ? (
+															<i
+																className="iconfont icon-dianzan1"
+																style={{ color: "#1171ee" }}
+																onClick={() =>
+																	unLikeArticle(
+																		item.id,
+																	)
+																}
+															/>
+														) : (
+															<i
+																className="iconfont icon-dianzan"
+																onClick={() =>
+																	likeArticle(
+																		item.id,
+																	)
+																}
+															/>
+														)}
 														<span>
 															{item.like_count}
 														</span>

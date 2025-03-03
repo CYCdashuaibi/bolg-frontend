@@ -43,6 +43,7 @@ const ArticleView = () => {
 			.then((res) => {
 				if (res.success) {
 					setState({ articleDetail: res.data });
+					window.document.title = `${res.data.title}`;
 				}
 			})
 			.finally(() => {

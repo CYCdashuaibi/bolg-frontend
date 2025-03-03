@@ -37,3 +37,20 @@ export const deleteArticleAPI = (id) =>
 		url: `/article/delete/${id}`,
 		method: 'DELETE',
 	});
+
+// 点赞文章
+export const likeArticleAPI = (id) =>
+	request({
+		url: `/article/like/${id}`,
+		method: 'POST',
+	});
+
+// 取消点赞文章
+export const unLikeArticleAPI = (id) =>
+	request({
+		url: `/article/unlike/${id}`,
+		method: 'POST',
+	});
+
+
+
