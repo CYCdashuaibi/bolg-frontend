@@ -29,6 +29,7 @@ const initialState = {
 };
 
 function Home(props) {
+	window.document.title = "首页";
 	const [state, dispatch] = useSetState(initialState);
 	const {
 		activeTag,

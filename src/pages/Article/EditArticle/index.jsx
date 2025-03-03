@@ -16,7 +16,8 @@ const initialState = {
 	loading: false,
 };
 
-const EditArticle = (props) => {
+const EditArticle = () => {
+	window.document.title = "创建文章";
 	const { userInfo } = useSelector((state) => state.user);
 
 	const [state, dispatch] = useSetState(initialState);

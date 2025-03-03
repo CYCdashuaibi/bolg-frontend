@@ -3,6 +3,7 @@ import { Button, Result } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
+	window.document.title = "404";
 	const navigate = useNavigate();
 
 	return (

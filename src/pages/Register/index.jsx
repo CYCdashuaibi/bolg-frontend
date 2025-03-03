@@ -22,6 +22,8 @@ const initialState = {
 };
 
 const Register = () => {
+	window.document.title = "注册";
+
 	const [form] = Form.useForm();
 	const [state, dispatch] = useSetState(initialState);
 	const { getCodeLoading, registerLoading, codeDelay, email } = state;

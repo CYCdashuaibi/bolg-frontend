@@ -5,6 +5,8 @@ import { WelcomeStyle } from "./style";
 import avatar from "@/assets/images/avatar.jpeg";
 
 const Welcome = () => {
+	window.document.title = "欢迎";
+
 	const navigate = useNavigate();
 
 	return (

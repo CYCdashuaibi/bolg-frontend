@@ -9,6 +9,7 @@ import { fetchLogin } from "@/store/modules/user";
 import { LoginStyle } from "./style";
 
 const Login = () => {
+	window.document.title = "登录";
 	const dispatch = useDispatch();
 
 	const onFinish = (values) => {
