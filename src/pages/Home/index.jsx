@@ -13,14 +13,14 @@ import Category from "./components/Category";
 
 import { HomeStyle } from "./style";
 
-const defaultTags = [{ name: "全部" }];
+const defaultTags = [{ id: null, name: "全部" }];
 
 const DEFAULT_LIMIT = 20;
 
 const initialState = {
 	tags: [],
-	activeTag: "全部",
-	category: "全部",
+	activeTag: null,
+	category: null,
 	articleList: [],
 	page: 1,
 	limit: DEFAULT_LIMIT,
@@ -155,7 +155,7 @@ function Home(props) {
 			<div className="home_left">
 				<Category
 					onChange={(value) => {
-						dispatch({ category: value, page: 1 });
+						dispatch({ category: value, page: 1, activeTag: null });
 					}}
 				/>
 			</div>
@@ -172,7 +172,7 @@ function Home(props) {
 						}
 						options={tags.map((item) => ({
 							label: item.name,
-							value: item.name,
+							value: item.id,
 						}))}
 					/>
 				</header>
@@ -206,7 +206,7 @@ function Home(props) {
 												<ul className="action-list">
 													<li className="user-message item cyc_click_link">
 														<NavLink
-															to={`/cyc/user-view/${item.User.id}`}
+															to={`/cyc/user/${item.User.id}`}
 															className="username"
 															target="_blank"
 														>
@@ -284,6 +284,7 @@ function Home(props) {
 					) : (
 						<Empty
 							description="暂无数据"
+							image={Empty.PRESENTED_IMAGE_SIMPLE}
 							style={{ paddingTop: 100 }}
 						/>
 					)}

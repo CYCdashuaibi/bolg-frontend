@@ -7,6 +7,7 @@ import { CategoryStyle } from "./style";
 
 const defaultCategorys = [
 	{
+		id: null,
 		name: "全部",
 		icon: "icon-xingzhuang",
 	},
@@ -14,7 +15,7 @@ const defaultCategorys = [
 
 const initialState = {
 	categorys: [],
-	active: "全部",
+	active: null,
 };
 
 function Category({ onChange }) {
@@ -36,12 +37,12 @@ function Category({ onChange }) {
 				{categorys.map((item) => (
 					<a
 						className={`nav-item-wrap ${
-							active === item.name && "active"
+							active === item.id && "active"
 						}`}
 						key={item.name}
 						onClick={() => {
-							dispatch({ active: item.name });
-							onChange?.(item.name);
+							dispatch({ active: item.id });
+							onChange?.(item.id);
 						}}
 					>
 						<i className={`iconfont ${item.icon}`} />

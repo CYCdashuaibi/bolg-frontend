@@ -9,11 +9,11 @@ export const createArticleAPI = (data) =>
 	});
 
 // 获取文章列表
-export const getArticleListAPI = (data) =>
+export const getArticleListAPI = (params) =>
 	request({
 		url: '/article/list',
 		method: 'GET',
-		data,
+		params,
 	});
 
 // 获取文章详情
@@ -52,5 +52,51 @@ export const unLikeArticleAPI = (id) =>
 		method: 'POST',
 	});
 
+// 获取文章评论列表
+export const getCommentListAPI = (params) =>
+	request({
+		url: `/article/comment/list`,
+		method: 'GET',
+		params,
+	});
+
+// 评论文章
+export const commentArticleAPI = (data) =>
+	request({
+		url: `/article/comment/create`,
+		method: 'POST',
+		data,
+	});
+
+// 点赞评论
+export const likeCommentAPI = (id) =>
+	request({
+		url: `/article/comment/like/${id}`,
+		method: 'POST',
+	});
+
+// 取消点赞评论
+export const unLikeCommentAPI = (id) =>
+	request({
+		url: `/article/comment/unlike/${id}`,
+		method: 'POST',
+	});
+
+// 根据传入的评论 id，返回该评论详情及其所有后续回复（树状结构）
+export const getRelatedCommentAPI = (id, article_id) =>
+	request({
+		url: `/article/comment/related/${id}`,
+		method: 'GET',
+		params: {
+			article_id,
+		},
+	});
+
+// 删除评论
+export const deleteCommentAPI = (id) =>
+	request({
+		url: `/article/comment/${id}`,
+		method: 'DELETE',
+	});
 
 

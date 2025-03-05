@@ -95,6 +95,7 @@ export const ArticleViewStyle = styled.div`
 
 		&-main {
 			margin-top: 20px;
+			padding-left: 14px;
 		}
 	}
 `;
