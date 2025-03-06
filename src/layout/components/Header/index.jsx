@@ -86,11 +86,16 @@ function Header() {
 											</div>
 										}
 									>
-										<img
-											src={handleAvatar(userInfo.avatar)}
-											alt="头像"
+										<NavLink
+											to={`/cyc/user/${userInfo.id}`}
 											className="avatar"
-										/>
+										>
+											<img
+												src={handleAvatar(userInfo.avatar)}
+												alt="头像"
+												className="avatar"
+											/>
+										</NavLink>
 									</Popover>
 								) : (
 									<div className="login-content">
