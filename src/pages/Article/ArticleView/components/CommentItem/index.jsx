@@ -12,7 +12,7 @@ import {
 import { Comment } from "@ant-design/compatible";
 import { useSetState } from "ahooks";
 
-import { handleFormatTime, handleAvatar } from "@/utils";
+import { formatTime, handleAvatar } from "@/utils";
 
 import { commentArticleAPI } from "@/apis/article";
 
@@ -106,7 +106,7 @@ const CommentItem = (props) => {
 			}
 			avatar={<Avatar src={handleAvatar(comment.User?.avatar)} />}
 			content={comment.content}
-			datetime={handleFormatTime(comment.created_at)}
+			datetime={formatTime(comment.created_at)}
 			actions={[
 				<CommentActionsStyle>
 					<div className="actions-left">
