@@ -13,13 +13,14 @@ import Category from "./components/Category";
 
 import { HomeStyle } from "./style";
 
-const defaultTags = [{ id: null, name: "全部" }];
+const defaultTags = [{ id: 0, name: "全部" }];
 
 const DEFAULT_LIMIT = 20;
+const DEFAULT_TAG = 0;
 
 const initialState = {
 	tags: [],
-	activeTag: null,
+	activeTag: DEFAULT_TAG,
 	category: null,
 	articleList: [],
 	page: 1,
@@ -92,7 +93,7 @@ function Home(props) {
 		getArticleListAPI({
 			keyword,
 			category,
-			tags: [activeTag],
+			tags: activeTag ? [activeTag] : [],
 			page,
 			limit,
 		}).then((res) => {
@@ -155,7 +156,7 @@ function Home(props) {
 			<div className="home_left">
 				<Category
 					onChange={(value) => {
-						dispatch({ category: value, page: 1, activeTag: null });
+						dispatch({ category: value, page: 1, activeTag: DEFAULT_TAG });
 					}}
 				/>
 			</div>

@@ -12,14 +12,12 @@ import {
 import { Comment } from "@ant-design/compatible";
 import { useSetState } from "ahooks";
 
-import { handleFormatTime, handleInsertValue } from "@/utils";
+import { handleFormatTime, handleAvatar } from "@/utils";
 
 import { commentArticleAPI } from "@/apis/article";
 
 import "./index.scss";
 import { ReplyStyle, CommentActionsStyle } from "./style";
-
-import DefaultAvatar from "@/assets/images/default_avatar.png";
 
 const initialState = {
 	isFocus: false,
@@ -106,15 +104,7 @@ const CommentItem = (props) => {
 						)}
 				</>
 			}
-			avatar={
-				<Avatar
-					src={
-						comment.User?.avatar
-							? handleInsertValue(comment.User?.avatar)
-							: DefaultAvatar
-					}
-				/>
-			}
+			avatar={<Avatar src={handleAvatar(comment.User?.avatar)} />}
 			content={comment.content}
 			datetime={handleFormatTime(comment.created_at)}
 			actions={[
@@ -157,7 +147,8 @@ const CommentItem = (props) => {
 						</div>
 					</div>
 					<div className="actions-right">
-						{(userInfo.id === comment.User.id || userInfo.role === 'admin') && (
+						{(userInfo.id === comment.User.id ||
+							userInfo.role === "admin") && (
 							<Popconfirm
 								title="确定删除该评论吗？"
 								onConfirm={() => deleteComment(comment.id)}

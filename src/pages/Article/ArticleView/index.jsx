@@ -16,15 +16,13 @@ import {
 	getRelatedCommentAPI,
 	deleteCommentAPI,
 } from "@/apis/article";
-import { handleFormatTime, handleInsertValue } from "@/utils";
+import { handleFormatTime, handleAvatar } from "@/utils";
 import { updateCommentTree, deleteCommentById } from "./fn";
 
 import { MarkdownPreview } from "@/components";
 import { CommentItem } from "./components";
 
 import { ArticleViewStyle } from "./style";
-
-import DefaultAvatar from "@/assets/images/default_avatar.png";
 
 const COMMENT_PAGE_SIZE = 10;
 
@@ -120,13 +118,16 @@ const ArticleView = () => {
 
 	const updateParentComment = (id, article_id) => {
 		getRelatedCommentAPI(id, article_id).then((res) => {
-
 			if (res.success) {
 				// setState({ commentList: res.data });
-				const newCommentList = updateCommentTree(commentList, id, (comment) => ({
-					...comment,
-					children: res.data,
-				}));
+				const newCommentList = updateCommentTree(
+					commentList,
+					id,
+					(comment) => ({
+						...comment,
+						children: res.data,
+					}),
+				);
 
 				setState({ commentList: newCommentList });
 			}
@@ -216,17 +217,11 @@ const ArticleView = () => {
 					</div>
 				</div>
 				<div className="article-comment cyc_card">
-					<div className="article-comment-header">
-						评论 {total}
-					</div>
+					<div className="article-comment-header">评论 {total}</div>
 					<div className="article-comment-action">
 						<div className="action-left">
 							<img
-								src={
-									userInfo.avatar
-										? handleInsertValue(userInfo.avatar)
-										: DefaultAvatar
-								}
+								src={handleAvatar(userInfo.avatar)}
 								alt="头像"
 								className="avatar"
 							/>

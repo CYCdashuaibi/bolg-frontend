@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, Popover, Popconfirm } from "antd";
 import { PlusCircleOutlined, LogoutOutlined } from "@ant-design/icons";
 
-import { getToken, handleInsertValue } from "@/utils";
+import { getToken, handleAvatar } from "@/utils";
 import { fetchLogout } from "@/store/modules/user";
 
 import { menuList } from "./contants";
@@ -11,7 +11,6 @@ import { menuList } from "./contants";
 import { HeaderStyle } from "./style";
 
 import Logo from "@/assets/react.svg";
-import DefaultAvatar from "@/assets/images/default_avatar.png";
 
 function Header() {
 	const navigate = useNavigate();
@@ -54,7 +53,11 @@ function Header() {
 									style={{ width: 300 }}
 									onSearch={(value) => {
 										if (value.trim()) {
-											navigate(`/cyc/home?search=${encodeURIComponent(value.trim())}`);
+											navigate(
+												`/cyc/home?search=${encodeURIComponent(
+													value.trim(),
+												)}`,
+											);
 										} else {
 											navigate("/cyc/home");
 										}
@@ -84,9 +87,7 @@ function Header() {
 										}
 									>
 										<img
-											src={
-												userInfo.avatar ? handleInsertValue(userInfo.avatar) : DefaultAvatar
-											}
+											src={handleAvatar(userInfo.avatar)}
 											alt="头像"
 											className="avatar"
 										/>

@@ -4,13 +4,11 @@ import { Form, Input, Button, message } from "antd";
 import { useSetState } from "ahooks";
 
 import { createArticleAPI } from "@/apis/article";
-import { handleInsertValue } from "@/utils";
+import { handleAvatar } from "@/utils";
 import { MarkdownEditor } from "@/components";
 import BeforePublish from "./components/BeforePublish";
 
 import { EditArticleStyle } from "./style";
-
-import DefaultAvatar from "@/assets/images/default_avatar.png";
 
 const initialState = {
 	loading: false,
@@ -124,11 +122,7 @@ const EditArticle = () => {
 						<Button type="primary">发布</Button>
 					</BeforePublish>
 					<img
-						src={
-							userInfo.avatar
-								? handleInsertValue(userInfo.avatar)
-								: DefaultAvatar
-						}
+						src={handleAvatar(userInfo.avatar)}
 						alt="头像"
 						className="avatar"
 					/>

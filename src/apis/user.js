@@ -53,3 +53,10 @@ export const getProfileAPI = () =>
 		url: '/user/profile',
 		method: 'GET',
 	});
+
+// 获取用户信息
+export const getUserInfoAPI = (id) =>
+	request({
+		url: `/user/${id}`,
+		method: 'GET',
+	});

@@ -11,6 +11,7 @@ const Welcome = lazy(() => import("@/pages/Welcome"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const EditArticle = lazy(() => import("@/pages/Article/EditArticle"));
 const ArticleView = lazy(() => import("@/pages/Article/ArticleView"));
+const UserInfo = lazy(() => import("@/pages/UserInfo"));
 
 const Home = lazy(() => import("@/pages/Home"));
 
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
 				name: "查阅文章",
 				path: "article-view/:id",
 				element: <ArticleView />,
+			},
+			{
+				name: "用户信息",
+				path: "user/:id",
+				element: <UserInfo />,
 			},
 		],
 	},

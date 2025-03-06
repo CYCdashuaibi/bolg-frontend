@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { uploadFileAPI } from '@/apis/upload';
 import { IMAGE_BASE_URL } from '@/utils/config';
 
+import DefaultAvatar from "@/assets/images/default_avatar.png";
+
 export const handleUpload = (files, category) => {
 	const formData = new FormData();
 	files.forEach((file) => formData.append('files', file));
@@ -37,3 +39,11 @@ export const handleRemoveBaseUrl = (url) => url.replace(IMAGE_BASE_URL, "");
  * @returns 格式化后的时间
  */
 export const handleFormatTime = (time, format = "YYYY-MM-DD HH:mm:ss") => dayjs(new Date(time)).format(format);
+
+/**
+ * 处理头像
+ */
+export const handleAvatar = (avatar) => {
+	if (!avatar) return DefaultAvatar;
+	return avatar.startsWith("http") ? avatar : handleInsertValue(avatar);
+};
