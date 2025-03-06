@@ -5,7 +5,11 @@ import { Select, Empty, Spin } from "antd";
 import { useSetState } from "ahooks";
 
 import { getTagListAPI } from "@/apis/tag";
-import { getArticleListAPI, likeArticleAPI, unLikeArticleAPI } from "@/apis/article";
+import {
+	getArticleListAPI,
+	likeArticleAPI,
+	unLikeArticleAPI,
+} from "@/apis/article";
 
 import { handleInsertValue } from "@/utils";
 
@@ -98,7 +102,13 @@ function Home(props) {
 			limit,
 		}).then((res) => {
 			if (res.success) {
-				dispatch({ articleList: res.data.rows });
+				dispatch({
+					articleList:
+						page === 1
+							? res.data.rows
+							: [...articleList, ...res.data.rows],
+					total: res.data.count,
+				});
 			}
 		});
 	};
@@ -156,7 +166,11 @@ function Home(props) {
 			<div className="home_left">
 				<Category
 					onChange={(value) => {
-						dispatch({ category: value, page: 1, activeTag: DEFAULT_TAG });
+						dispatch({
+							category: value,
+							page: 1,
+							activeTag: DEFAULT_TAG,
+						});
 					}}
 				/>
 			</div>
@@ -225,7 +239,9 @@ function Home(props) {
 														{item.isLiked ? (
 															<i
 																className="iconfont icon-dianzan1"
-																style={{ color: "#1171ee" }}
+																style={{
+																	color: "#1171ee",
+																}}
 																onClick={() =>
 																	unLikeArticle(
 																		item.id,

@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tabs, Spin } from "antd";
 import { useSetState } from "ahooks";
 
@@ -24,14 +25,27 @@ const TABS = [
 const initialState = {
 	userInfo: {},
 	userInfoLoading: true,
-	tabsActiveKey: "1",
 };
 
 const UserInfo = () => {
-	const { id } = useParams();
+	const { id, tab } = useParams();
 
 	const [state, setState] = useSetState(initialState);
-	const { userInfo, userInfoLoading, tabsActiveKey } = state;
+	const { userInfo, userInfoLoading } = state;
+
+	const navigate = useNavigate();
+
+	const tabsActiveKey = tab || "1";
+
+	const { userInfo: userInfoStore } = useSelector((state) => state.user);
+
+	const tabs = useMemo(() => {
+		if (userInfoStore.id === Number(id)) {
+			return TABS;
+		}
+
+		return TABS.filter((tab) => tab.key !== "2");
+	}, [userInfoStore]);
 
 	useEffect(() => {
 		if (!id) return;
@@ -64,9 +78,9 @@ const UserInfo = () => {
 			<div className="main">
 				<div className="main-tabs">
 					<Tabs
-						defaultActiveKey="1"
-						items={TABS}
-						onChange={(key) => setState({ tabsActiveKey: key })}
+						activeKey={tabsActiveKey}
+						items={tabs}
+						onChange={(key) => navigate(`/cyc/user/${id}/${key}`)}
 					/>
 				</div>
 

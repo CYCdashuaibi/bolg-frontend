@@ -16,11 +16,10 @@ export const ArticleListStyle = styled.div`
 				padding: 12px 0;
 				border-bottom: 1px solid rgba(228, 230, 235, 0.5);
 				display: flex;
-				overflow: hidden;
 
 				.content-main {
 					flex: 1 1 auto;
-					overflow: hidden;
+					overflow-x: hidden;
 
 					.title {
 						font-weight: 600;
@@ -58,6 +57,10 @@ export const ArticleListStyle = styled.div`
 									margin-right: 4px;
 									font-size: 18px;
 								}
+							}
+
+							.more {
+								margin-left: 20px;
 							}
 						}
 
@@ -100,6 +103,34 @@ export const ArticleListStyle = styled.div`
 		.loading-spin {
 			width: 100%;
 			height: 80px;
+		}
+	}
+`;
+
+export const MoreContentStyle = styled.div`
+	width: 50px;
+
+	.edit,
+	.delete {
+		display: block;
+		text-align: center;
+		line-height: 24px;
+		cursor: pointer;
+	}
+
+	.edit {
+		color: #909090;
+
+		&:hover {
+			color: #333;
+		}
+	}
+
+	.delete {
+		color: #f97676;
+
+		&:hover {
+			color: #f64242;
 		}
 	}
 `;

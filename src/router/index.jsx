@@ -50,7 +50,7 @@ const router = createBrowserRouter([
 	},
 	{
 		name: "创建文章",
-		path: "edit-article",
+		path: "edit-article/:id",
 		element: (
 			<RequireAuth>
 				<EditArticle />
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
 			},
 			{
 				name: "用户信息",
-				path: "user/:id",
+				path: "user/:id/:tab?",
 				element: <UserInfo />,
 			},
 		],

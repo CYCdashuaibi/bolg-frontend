@@ -1,17 +1,19 @@
 import { useEffect, useMemo, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Spin, message, Empty } from "antd";
+import { Spin, message, Empty, Popover, Modal } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { useSetState } from "ahooks";
 
 import {
 	getArticleListAPI,
 	likeArticleAPI,
 	unLikeArticleAPI,
+	deleteArticleAPI,
 } from "@/apis/article";
 import { handleInsertValue, formatTime } from "@/utils";
 
-import { ArticleListStyle } from "./style";
+import { ArticleListStyle, MoreContentStyle } from "./style";
 
 const DEFAULT_LIMIT = 20;
 
@@ -24,7 +26,7 @@ const initialState = {
 };
 
 const ArticleList = ({ user_id }) => {
-	const [state, dispatch] = useSetState(initialState);
+	const [state, setState] = useSetState(initialState);
 	const { articleList, loading, page, limit, total } = state;
 
 	const { token } = useSelector((state) => state.user);
@@ -44,7 +46,7 @@ const ArticleList = ({ user_id }) => {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting && hasMore && !loading) {
-					dispatch({ page: page + 1 });
+					setState({ page: page + 1 });
 				}
 			},
 			{ threshold: 0 },
@@ -62,7 +64,7 @@ const ArticleList = ({ user_id }) => {
 	}, [hasMore, loading]);
 
 	const getArticleList = () => {
-		dispatch({ loading: true });
+		setState({ loading: true });
 		getArticleListAPI({
 			user_id,
 			page,
@@ -70,14 +72,17 @@ const ArticleList = ({ user_id }) => {
 		})
 			.then((res) => {
 				if (res.success) {
-					dispatch({
-						articleList: [...articleList, ...res.data.rows],
+					setState({
+						articleList:
+							page === 1
+								? res.data.rows
+								: [...articleList, ...res.data.rows],
 						total: res.data.count,
 					});
 				}
 			})
 			.finally(() => {
-				dispatch({ loading: false });
+				setState({ loading: false });
 			});
 	};
 
@@ -89,7 +94,7 @@ const ArticleList = ({ user_id }) => {
 		}
 		likeArticleAPI(id).then((res) => {
 			if (res.success) {
-				dispatch({
+				setState({
 					articleList: articleList.map((item) => {
 						if (item.id === id) {
 							return {
@@ -113,7 +118,7 @@ const ArticleList = ({ user_id }) => {
 		}
 		unLikeArticleAPI(id).then((res) => {
 			if (res.success) {
-				dispatch({
+				setState({
 					articleList: articleList.map((item) => {
 						if (item.id === id) {
 							return {
@@ -126,6 +131,29 @@ const ArticleList = ({ user_id }) => {
 					}),
 				});
 			}
+		});
+	};
+
+	// 删除文章
+	const deleteArticle = (id) => {
+		Modal.confirm({
+			title: "提示",
+			content: "确定删除该文章吗？",
+			okText: "确定",
+			cancelText: "取消",
+			onOk: () => {
+				deleteArticleAPI(id).then((res) => {
+					if (res.success) {
+						const beforePage = page;
+						if (beforePage === 1) {
+							getArticleList();
+						} else {
+							setState({ page: 1 });
+						}
+						message.success("删除成功");
+					}
+				});
+			},
 		});
 	};
 
@@ -200,6 +228,34 @@ const ArticleList = ({ user_id }) => {
 														{item.like_count}
 													</span>
 												</li>
+												<li className="more item">
+													<Popover
+														content={
+															<MoreContentStyle>
+																<NavLink
+																	to={`/edit-article/${item.id}`}
+																	className="edit"
+																>
+																	编辑
+																</NavLink>
+																<div
+																	className="delete"
+																	onClick={() =>
+																		deleteArticle(
+																			item.id,
+																		)
+																	}
+																>
+																	删除
+																</div>
+															</MoreContentStyle>
+														}
+														trigger="click"
+														placement="bottom"
+													>
+														<EllipsisOutlined />
+													</Popover>
+												</li>
 											</ul>
 
 											<ul className="entry-footer-tags">
@@ -238,9 +294,9 @@ const ArticleList = ({ user_id }) => {
 					</>
 				) : (
 					<Empty
-						description="这里什么都没有"
+						description="这里什么也没有"
 						image={Empty.PRESENTED_IMAGE_SIMPLE}
-						style={{ paddingTop: 100 }}
+						style={{ padding: 100, margin: 0 }}
 					/>
 				)}
 			</ul>
