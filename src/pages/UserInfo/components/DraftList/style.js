@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const DraftListStyle = styled.div`
 	background: #fff;
+	overflow: auto;
+    max-height: calc(100vh - 304px);
 
 	.draft-list {
 		.entry-skeleton {
