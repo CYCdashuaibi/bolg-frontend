@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Empty, Popover, Modal, message } from "antd";
+import { Empty, Popover, Modal, message, Skeleton, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useSetState } from "ahooks";
 
@@ -101,7 +101,11 @@ const DraftList = ({ user_id }) => {
 	return (
 		<DraftListStyle>
 			<ul className="draft-list">
-				{draftList?.length > 0 ? (
+				{loading && page === 1 ? (
+					<div className="entry-skeleton">
+						<Skeleton active />
+					</div>
+				) : draftList?.length > 0 ? (
 					<>
 						{draftList.map((item) => (
 							<li key={item.id} className="draft-item">
@@ -151,6 +155,16 @@ const DraftList = ({ user_id }) => {
 								</div>
 							</li>
 						))}
+						{hasMore && !loading && (
+							<div ref={loadingRef}>
+								<Spin
+									tip="加载中..."
+									wrapperClassName="loading-spin"
+								>
+									<></>
+								</Spin>
+							</div>
+						)}
 					</>
 				) : (
 					<Empty

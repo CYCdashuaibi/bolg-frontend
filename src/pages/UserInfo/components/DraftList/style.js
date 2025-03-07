@@ -4,6 +4,10 @@ export const DraftListStyle = styled.div`
 	background: #fff;
 
 	.draft-list {
+		.entry-skeleton {
+			padding: 12px 20px;
+		}
+
 		.draft-item {
 			padding: 0 20px;
 
@@ -30,7 +34,6 @@ export const DraftListStyle = styled.div`
 				}
 
 				.more {
-
 					.more-content {
 						width: 50px;
 
