@@ -4,6 +4,10 @@ export const ArticleListStyle = styled.div`
 	background: #fff;
 
 	.entry-list {
+		.entry-skeleton {
+			padding: 12px 20px;
+		}
+
 		.entry {
 			cursor: pointer;
 			padding: 0 20px;

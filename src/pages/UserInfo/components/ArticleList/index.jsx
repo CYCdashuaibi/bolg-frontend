@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Spin, message, Empty, Popover, Modal } from "antd";
+import { Spin, message, Empty, Popover, Modal, Skeleton } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useSetState } from "ahooks";
 
@@ -45,6 +45,8 @@ const ArticleList = ({ user_id }) => {
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
+				console.log(entries[0].isIntersecting && hasMore && !loading);
+
 				if (entries[0].isIntersecting && hasMore && !loading) {
 					setState({ page: page + 1 });
 				}
@@ -160,7 +162,11 @@ const ArticleList = ({ user_id }) => {
 	return (
 		<ArticleListStyle>
 			<ul className="entry-list">
-				{articleList?.length > 0 ? (
+				{loading && page === 1 ? (
+					<div className="entry-skeleton">
+						<Skeleton active />
+					</div>
+				) : articleList?.length > 0 ? (
 					<>
 						{articleList.map((item) => (
 							<li key={item.id} className="entry">
@@ -283,13 +289,14 @@ const ArticleList = ({ user_id }) => {
 							</li>
 						))}
 						{hasMore && !loading && (
-							<Spin
-								tip="加载中..."
-								wrapperClassName="loading-spin"
-								ref={loadingRef}
-							>
-								<></>
-							</Spin>
+							<div ref={loadingRef}>
+								<Spin
+									tip="加载中..."
+									wrapperClassName="loading-spin"
+								>
+									<></>
+								</Spin>
+							</div>
 						)}
 					</>
 				) : (
