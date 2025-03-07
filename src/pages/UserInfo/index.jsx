@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { Tabs, Spin } from "antd";
+import { Tabs, Spin, Button } from "antd";
 import { useSetState } from "ahooks";
 
 import { getUserInfoAPI } from "@/apis/user";
@@ -64,13 +64,28 @@ const UserInfo = () => {
 		<UserInfoStyle>
 			<Spin spinning={userInfoLoading}>
 				<div className="header cyc_card">
-					<div className="header-avatar">
-						<img src={handleAvatar(userInfo.avatar)} alt="avatar" />
-					</div>
-					<div className="header-info">
-						<div className="header-info-nickname">
-							{userInfo.nickname}
+					<div className="header-left">
+						<div className="header-avatar">
+							<img
+								src={handleAvatar(userInfo.avatar)}
+								alt="avatar"
+							/>
 						</div>
+						<div className="header-info">
+							<div className="header-info-nickname">
+								{userInfo.nickname}
+							</div>
+						</div>
+					</div>
+					<div className="header-right">
+						<Button
+							color="primary"
+							variant="outlined"
+							className="setting-btn"
+							onClick={() => navigate(`/cyc/profile`)}
+						>
+							设置
+						</Button>
 					</div>
 				</div>
 			</Spin>

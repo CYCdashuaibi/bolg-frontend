@@ -4,8 +4,14 @@ export const UserInfoStyle = styled.div`
 	.header {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		background-color: #fff;
 		padding: 30px;
+
+		&-left {
+			display: flex;
+			align-items: center;
+		}
 
 		&-avatar {
 			width: 90px;
@@ -29,6 +35,13 @@ export const UserInfoStyle = styled.div`
 				font-weight: 600;
 				line-height: 1.2;
 				color: #000;
+			}
+		}
+
+		&-right {
+			.setting-btn {
+				width: 116px;
+				border-radius: 5px;
 			}
 		}
 	}

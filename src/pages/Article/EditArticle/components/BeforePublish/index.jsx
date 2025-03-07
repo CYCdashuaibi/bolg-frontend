@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useState, useEffect } from "react";
 import { Form, Button, Select, Input, Upload, Radio, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { UploadOutlined } from "@ant-design/icons";
 import { useSetState } from "ahooks";
 
@@ -170,7 +171,12 @@ const BeforePublish = forwardRef(({ children, onPublish, loading }, ref) => {
 												style={{ width: "100%" }}
 											/>
 										) : (
-											"上传"
+											<div style={{ color: "#86909c" }}>
+												<PlusOutlined />
+												<div style={{ marginTop: 8 }}>
+													上传封面
+												</div>
+											</div>
 										)}
 									</Upload>
 								</Form.Item>
@@ -209,7 +215,11 @@ const BeforePublish = forwardRef(({ children, onPublish, loading }, ref) => {
 							>
 								取消
 							</Button>
-							<Button type="primary" onClick={onPublish} loading={loading}>
+							<Button
+								type="primary"
+								onClick={onPublish}
+								loading={loading}
+							>
 								确认并发布
 							</Button>
 						</div>

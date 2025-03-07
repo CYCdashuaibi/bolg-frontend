@@ -12,6 +12,7 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 const EditArticle = lazy(() => import("@/pages/Article/EditArticle"));
 const ArticleView = lazy(() => import("@/pages/Article/ArticleView"));
 const UserInfo = lazy(() => import("@/pages/UserInfo"));
+const Profile = lazy(() => import("@/pages/Profile"));
 
 const Home = lazy(() => import("@/pages/Home"));
 
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
 	},
 	{
 		name: "创建文章",
-		path: "edit-article/:id",
+		path: "edit-article/:id?",
 		element: (
 			<RequireAuth>
 				<EditArticle />
@@ -79,6 +80,15 @@ const router = createBrowserRouter([
 				name: "用户信息",
 				path: "user/:id/:tab?",
 				element: <UserInfo />,
+			},
+			{
+				name: "个人资料",
+				path: "profile",
+				element: (
+					<RequireAuth>
+						<Profile />
+					</RequireAuth>
+				),
 			},
 		],
 	},

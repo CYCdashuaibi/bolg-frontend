@@ -40,6 +40,14 @@ export const registerAPI = (data) =>
 		data: data,
 	});
 
+// 修改密码
+export const updatePasswordAPI = (data) =>
+	request({
+		url: '/auth/update-password',
+		method: 'POST',
+		data: data,
+	});
+
 // 获取用户列表
 export const getUserListAPI = () =>
 	request({
@@ -60,3 +68,13 @@ export const getUserInfoAPI = (id) =>
 		url: `/user/${id}`,
 		method: 'GET',
 	});
+
+// 修改用户信息
+export const updateUserInfoAPI = (data) =>
+	request({
+		url: '/user/profile',
+		method: 'PUT',
+		data: data,
+	});
+
+
