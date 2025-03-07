@@ -15,6 +15,10 @@ export const HeaderStyle = styled.header`
 		display: flex;
 		align-items: center;
 
+		.logo {
+			height: 30px;
+		}
+
 		ul {
 			display: flex;
 			align-items: center;

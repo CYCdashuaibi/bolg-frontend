@@ -10,7 +10,7 @@ import { menuList } from "./contants";
 
 import { HeaderStyle } from "./style";
 
-import Logo from "@/assets/react.svg";
+import Logo from "/LOGO.jpg";
 
 function Header() {
 	const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Header() {
 	return (
 		<HeaderStyle>
 			<div className="container">
-				<NavLink to="/cyc/home" className="logo">
+				<NavLink to="/cyc/home">
 					<img src={Logo} alt="logo" className="logo" />
 				</NavLink>
 				<nav className="header-nav">
