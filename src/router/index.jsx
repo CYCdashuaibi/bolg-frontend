@@ -13,6 +13,7 @@ const EditArticle = lazy(() => import("@/pages/Article/EditArticle"));
 const ArticleView = lazy(() => import("@/pages/Article/ArticleView"));
 const UserInfo = lazy(() => import("@/pages/UserInfo"));
 const Profile = lazy(() => import("@/pages/Profile"));
+const PublishSuccess = lazy(() => import("@/pages/Article/PublishSuccess"));
 
 const Home = lazy(() => import("@/pages/Home"));
 
@@ -89,6 +90,11 @@ const router = createBrowserRouter([
 						<Profile />
 					</RequireAuth>
 				),
+			},
+			{
+				name: "发布成功",
+				path: "publish-success",
+				element: <PublishSuccess />,
 			},
 		],
 	},

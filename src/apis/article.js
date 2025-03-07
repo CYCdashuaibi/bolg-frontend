@@ -24,9 +24,9 @@ export const getArticleDetailAPI = (id) =>
 	});
 
 // 更新文章
-export const updateArticleAPI = (id, data) =>
+export const updateArticleAPI = (data) =>
 	request({
-		url: `/article/update/${id}`,
+		url: `/article/update/${data.id}`,
 		method: 'PUT',
 		data,
 	});
