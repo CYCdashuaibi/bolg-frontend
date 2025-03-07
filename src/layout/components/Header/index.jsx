@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, Popover, Popconfirm } from "antd";
 import { PlusCircleOutlined, LogoutOutlined } from "@ant-design/icons";
@@ -19,6 +19,9 @@ function Header() {
 
 	const dispatch = useDispatch();
 	const { userInfo, token } = useSelector((state) => state.user);
+
+	const [searchParams] = useSearchParams();
+	const keyword = searchParams.get("search");
 
 	const logout = () => {
 		dispatch(fetchLogout());
@@ -48,6 +51,7 @@ function Header() {
 						<ul className="nav-list-right">
 							<li className="search">
 								<Input.Search
+									defaultValue={keyword || ''}
 									placeholder="搜索"
 									enterButton
 									style={{ width: 300 }}
