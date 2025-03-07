@@ -1,7 +1,7 @@
 import { useEffect, useRef, useMemo } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Select, Empty, Spin } from "antd";
+import { Select, Empty, Spin, Skeleton } from "antd";
 import { useSetState } from "ahooks";
 
 import { getTagListAPI } from "@/apis/tag";
@@ -50,6 +50,7 @@ function Home(props) {
 	const { token } = useSelector((state) => state.user);
 
 	const loadingRef = useRef(false);
+	const isFirstRender = useRef(true);
 
 	const [searchParams] = useSearchParams();
 	const keyword = searchParams.get("search");
@@ -68,8 +69,18 @@ function Home(props) {
 	}, []);
 
 	useEffect(() => {
+		if (isFirstRender.current) return;
+		const beforePage = page;
+		if (beforePage !== 1) {
+			dispatch({ page: 1 });
+		} else {
+			getArticleList();
+		}
+	}, [category, activeTag, keyword]);
+
+	useEffect(() => {
 		getArticleList();
-	}, [category, activeTag, page, limit, keyword]);
+	}, [page]);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -94,23 +105,29 @@ function Home(props) {
 
 	// 获取文章列表
 	const getArticleList = () => {
+		isFirstRender.current = false;
+		dispatch({ loading: true });
 		getArticleListAPI({
 			keyword,
 			category,
 			tags: activeTag ? [activeTag] : [],
 			page,
 			limit,
-		}).then((res) => {
-			if (res.success) {
-				dispatch({
-					articleList:
-						page === 1
-							? res.data.rows
-							: [...articleList, ...res.data.rows],
-					total: res.data.count,
-				});
-			}
-		});
+		})
+			.then((res) => {
+				if (res.success) {
+					dispatch({
+						articleList:
+							page === 1
+								? res.data.rows
+								: [...articleList, ...res.data.rows],
+						total: res.data.count,
+					});
+				}
+			})
+			.finally(() => {
+				dispatch({ loading: false });
+			});
 	};
 
 	// 点赞文章
@@ -192,7 +209,11 @@ function Home(props) {
 					/>
 				</header>
 				<ul className="entry-list">
-					{articleList?.length > 0 ? (
+					{loading && page === 1 ? (
+						<div className="entry-skeleton">
+							<Skeleton active />
+						</div>
+					) : articleList?.length > 0 ? (
 						<>
 							{articleList.map((item) => (
 								<li className="entry" key={item.id}>
@@ -289,20 +310,21 @@ function Home(props) {
 								</li>
 							))}
 							{hasMore && !loading && (
-								<Spin
-									tip="加载中..."
-									wrapperClassName="loading-spin"
-									ref={loadingRef}
-								>
-									<></>
-								</Spin>
+								<div ref={loadingRef}>
+									<Spin
+										tip="加载中..."
+										wrapperClassName="loading-spin"
+									>
+										<></>
+									</Spin>
+								</div>
 							)}
 						</>
 					) : (
 						<Empty
 							description="暂无数据"
 							image={Empty.PRESENTED_IMAGE_SIMPLE}
-							style={{ paddingTop: 100 }}
+							style={{ paddingTop: 100, margin: 0 }}
 						/>
 					)}
 				</ul>

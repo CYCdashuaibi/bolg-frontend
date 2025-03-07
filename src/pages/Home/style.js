@@ -13,7 +13,7 @@ export const HomeStyle = styled.div`
 		}
 		&_center {
 			flex: 1 1 auto;
-			overflow: hidden;
+			overflow: auto;
 
 			.list-header {
 				padding: 12px 20px;
@@ -25,6 +25,10 @@ export const HomeStyle = styled.div`
 
 			.entry-list {
 				min-height: calc(100vh - 180px);
+
+				.entry-skeleton {
+					padding: 12px 20px;
+				}
 
 				.entry {
 					padding: 12px 20px;
