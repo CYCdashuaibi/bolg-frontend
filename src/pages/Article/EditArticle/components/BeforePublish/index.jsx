@@ -34,13 +34,15 @@ const BeforePublish = forwardRef(
 			},
 			form,
 			reset: () => {
-				form.resetFields();
+				if (form) {
+					form.resetFields();
+				}
 				dispatch({ cover: null });
 			},
 		}));
 
 		useEffect(() => {
-			if (initialValue) {
+			if (visible && initialValue) {
 				form.setFieldsValue({
 					category_id: initialValue?.Category?.id,
 					tags: initialValue?.Tags?.map((item) => item.id),
@@ -49,7 +51,7 @@ const BeforePublish = forwardRef(
 				});
 				dispatch({ cover: initialValue.cover_image });
 			}
-		}, [initialValue]);
+		}, [visible, initialValue]);
 
 		useEffect(() => {
 			getCategoryListAPI().then((res) => {
@@ -127,6 +129,7 @@ const BeforePublish = forwardRef(
 										span: 18,
 									}}
 									className="popover-form"
+									preserve={false}
 								>
 									<Form.Item
 										name="category_id"

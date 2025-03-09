@@ -90,7 +90,9 @@ const EditArticle = () => {
 								form.resetFields();
 								markdownEditorRef.current.reset();
 								beforePublishRef.current.reset();
-								navigate("/cyc/publish-success", { replace: true });
+								navigate("/cyc/publish-success", {
+									replace: true,
+								});
 							}
 						})
 						.finally(() => {
@@ -103,7 +105,7 @@ const EditArticle = () => {
 	const onSaveDraft = () => {
 		dispatch({ loading: true });
 		const values = form.getFieldsValue();
-		const content = markdownEditorRef.current.getHTML();
+		const content = markdownEditorRef.current.getValue();
 		const beforePublishValues =
 			beforePublishRef.current.form.getFieldsValue();
 
@@ -114,7 +116,13 @@ const EditArticle = () => {
 			status: "draft",
 		};
 
-		createArticleAPI(params)
+		const api = id ? updateArticleAPI : createArticleAPI;
+
+		if (id) {
+			params.id = id;
+		}
+
+		api(params)
 			.then((res) => {
 				if (res?.success) {
 					message.success("保存草稿成功");
@@ -141,15 +149,13 @@ const EditArticle = () => {
 					</Form.Item>
 				</Form>
 				<div className="edit-article-header-right">
-					{!id && (
-						<Button
-							color="primary"
-							variant="outlined"
-							onClick={onSaveDraft}
-						>
-							保存草稿
-						</Button>
-					)}
+					<Button
+						color="primary"
+						variant="outlined"
+						onClick={onSaveDraft}
+					>
+						保存草稿
+					</Button>
 					<BeforePublish
 						ref={beforePublishRef}
 						onPublish={onPublish}
